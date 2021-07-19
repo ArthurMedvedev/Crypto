@@ -16,8 +16,9 @@ def main():
                 cryptoindex = currentindex + key
                 if cryptoindex >= len(SYMBOL) - 1:
                     cryptoindex -= len(SYMBOL)
-                Cryptotext = SYMBOL[cryptoindex]
-                print(cryptoindex)
+
+                    Cryptotext += SYMBOL[cryptoindex]
+        print(Cryptotext)
         #return Cryptotext
 
                 
