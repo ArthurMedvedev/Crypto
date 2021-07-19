@@ -14,10 +14,10 @@ def main():
             if symbol in SYMBOL:
                 currentindex = SYMBOL.find(symbol)
                 cryptoindex = currentindex + key
-                if cryptoindex >= len(SYMBOL) - 1:
-                    cryptoindex -= len(SYMBOL)
-                Cryptotext = SYMBOL[cryptoindex]
-                print(cryptoindex)
+            if cryptoindex >= len(SYMBOL) - 1:
+                cryptoindex -= len(SYMBOL)
+            Cryptotext += SYMBOL[cryptoindex]
+            print(cryptoindex)
         #return Cryptotext
 
                 
