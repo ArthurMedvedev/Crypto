@@ -16,3 +16,19 @@ def Caesar(char=None, key = None):
         return Caesar(char=a, key=input('введите ключ, пренадлежащий отрезку [61;70]: '))
 a = input('введите открытый текст: ')
 print(Caesar(char=a, key=input('введите корректный ключ: ')))
+
+
+
+
+def decrypt(for_decrypt, arr_decrypt_letters):
+    encrypt = []
+    arr_encrypt_letters = [' ', 'о', 'а', 'е', 'и', 'т', 'н', 'л',
+                           'р', 'с', 'в', 'к', 'м', 'д', 'у', 'п',
+                           'б', 'г', 'ы', 'ч', 'ь', 'з', 'я', 'й',
+                           'х', 'ж', 'ш', 'ю', 'ф', 'э', 'щ',
+                           'ё', 'ц', 'ъ']
+    dictionary = dict(zip(arr_decrypt_letters, arr_encrypt_letters))
+    for i in for_decrypt:
+    encrypt.append(dictionary.get(i))
+    for_decrypt = ''.join(encrypt)
+    print(for_decrypt)

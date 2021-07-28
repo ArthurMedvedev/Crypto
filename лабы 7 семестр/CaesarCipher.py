@@ -3,6 +3,8 @@ def text_caesar(plain_text: str, shift: int) -> str:
     alfabet_lower = 'abcdefghijklmnopqrstuvwxyz'
     alfabet_upper = alfabet_lower.upper()
 
+    # p = '/.<,'
+
     ord_first_letter_lower = ord('a')
     ord_first_letter_upper = ord('A')
 
@@ -26,6 +28,12 @@ def text_caesar(plain_text: str, shift: int) -> str:
 def decrypt_text_caesar(plain_text: str, shift: int) ->str:
     return text_caesar(plain_text, -shift)
 
-print(text_caesar('abcdefgh', 1))
-print(decrypt_text_caesar('', 1))
+t = int(input('key: '))
+
+if t in range(61, 70):
+    # print(text_caesar('abcdefgh', t))
+    print(decrypt_text_caesar(text_caesar('abcdefgh', t), t))
+else:
+    print(False)
+
 
