@@ -5,12 +5,16 @@ import json
 def generate_frequency_dict():
     
     
-    alphabet = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+
 
     #создаем запрос по указнной сслыке, выделяем из нее только текстовые значения
-    response = requests.get('http://az.lib.ru/p/pushkin_a_s/text_0425.shtml')
-    s = response.text
-
+    
+    response = requests.get('https://www.weblitera.com/book/?id=19&lng=1&ch=1&l=ru')
+    responseAdd = requests.get('https://www.weblitera.com/book/?id=19&lng=1&ch=11&l=ru')
+    responseAdd1 = requests.get('https://www.weblitera.com/book/?id=19&lng=1&ch=19&l=ru')
+    s = response.text + responseAdd.text + responseAdd1.text
+    
     #отсекаем лишние символы
     arr = [i.lower() for i in s if i.lower() in alphabet]
     #print(arr[0:1001])
@@ -34,7 +38,7 @@ def generate_frequency_dict():
         
         json.dump(frequency_dict, file, ensure_ascii=False)
 
-    #print(frequency_dict)
+    print(frequency_dict)
 
 #функция сортировки
 def generate_sort_list():
@@ -43,11 +47,13 @@ def generate_sort_list():
         
         d = json.load(file)
 
-        return  sorted(d.items(), key=lambda x: x[1], reverse=True)
+        return [element[0] for element in sorted(d.items(), key=lambda x: x[1], reverse=True)]
     
     print(d)
 
+generate_frequency_dict()
 print(generate_sort_list())
+
     
 
 
