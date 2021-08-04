@@ -1,60 +1,53 @@
-import requests
-
+#импорт сторонних модулей
+from requests import get
 import json
 
-def generate_frequency_dict():
+
+def generate_frequency_dict_and_write_to_file():
+    write_dict_to_file(generate_frequency_dict())
+
+#функция записи словаря частот в json объект
+def write_dict_to_file(d: dict):
     
+    with open('freq.json', 'w', encoding='UTF-8') as file:
+        json.dump(d, file, ensure_ascii=False)
+
+
+#функция генерирования словаря частот 
+def generate_frequency_dict(txt: str = None) -> dict:
     
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
+    #если текст не передан явно, то используются данные с указанных сайтов
+    if txt is None:
+        
+        response = get('https://www.weblitera.com/book/?id=19&lng=1&ch=7&l=ru')
+        response1 = get('https://www.weblitera.com/book/?id=19&lng=1&ch=8&l=ru')
+        response2 = get('https://www.weblitera.com/book/?id=19&lng=1&ch=12&l=ru')
+        txt = response.text + response1.text + response2.text
 
-    #создаем запрос по указнной сслыке, выделяем из нее только текстовые значения
-    
-    response = requests.get('https://www.weblitera.com/book/?id=19&lng=1&ch=1&l=ru')
-    responseAdd = requests.get('https://www.weblitera.com/book/?id=19&lng=1&ch=11&l=ru')
-    responseAdd1 = requests.get('https://www.weblitera.com/book/?id=19&lng=1&ch=19&l=ru')
-    s = response.text + responseAdd.text + responseAdd1.text
-    
-    #отсекаем лишние символы
-    arr = [i.lower() for i in s if i.lower() in alphabet]
-    #print(arr[0:1001])
+    arr = [i.lower() for i in txt if i.lower() in alphabet]
 
-    #создаем словарь, хранящий частоты символов
-    frequency_dict = {}
+    d: dict = {}
 
-    #цикл компонования словаря частот
     for i in arr:
-        
-        frequency_dict[i] = frequency_dict.get(i, 0) + 1
-        
-        '''if i not in frequency_dict:
-            frequency_dict[i] = 1
-        
-        else:
-            frequency_dict[i] += 1'''
+        d[i] = d.get(i, 0) + 1
+    d = d
+    return d
 
-    #сохранение словаря в json нотации
-    with open('freq.json', 'w', encoding='UTF-8') as file:
-        
-        json.dump(frequency_dict, file, ensure_ascii=False)
 
-    print(frequency_dict)
+def generate_list_for_frequency_analyse(d: dict = None):
+    if d is None:
+        with open('freq.json', encoding='UTF-8') as file:
+            d = json.load(file)
+            #print(d)
 
-#функция сортировки
-def generate_sort_list():
+    return [[element[0] for element in sorted(d.items(), key=lambda x: x[1], reverse=True)], [d]]
 
-    with open('freq.json',  encoding='UTF-8') as file:
-        
-        d = json.load(file)
 
-        return [element[0] for element in sorted(d.items(), key=lambda x: x[1], reverse=True)]
-    
-    print(d)
-
-generate_frequency_dict()
-print(generate_sort_list())
-
-    
+if __name__ == '__main__':
+    #print(generate_frequency_dict_and_write_to_file())
+    print(generate_list_for_frequency_analyse())
 
 
 

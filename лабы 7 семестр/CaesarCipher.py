@@ -28,13 +28,13 @@ def text_caesar(plain_text: str, shift: int) -> str:
 def decrypt_text_caesar(plain_text: str, shift: int) ->str:
     return text_caesar(plain_text, -shift)
 
-t = int(input('key: '))
+'''t = int(input('key: '))
 
 if t in range(61, 70):
      print(text_caesar('A', t))
      print(decrypt_text_caesar('N', t))
 else:
-    print(False)
+    print(False)'''
 
     
 
